@@ -1,6 +1,7 @@
 .husky
 .eslintrc
 .gitmessage
+.gitignore
 .lintstagedrc
 .prettierrc
 tsconfig.json
@@ -8,3 +9,4 @@ tsconfig.json
 examples/
 test/
 src/
+.aicommits
