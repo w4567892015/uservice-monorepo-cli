@@ -17,6 +17,10 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "author": "Richy Yang <w4567892015@gmail.com>",
   "contributors": [
     {
