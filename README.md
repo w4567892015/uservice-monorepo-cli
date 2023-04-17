@@ -23,6 +23,8 @@ $ uservice --help
 $ uservice aicommits
 ```
 
+If you want to edit the commit message. you can use the `git commit --amend` command.
+
 #### Use OpenAI commit preview
 ```
 $ uservice aicommits --preview
@@ -36,6 +38,11 @@ $ uservice aicommits config --get
 #### Set OpenAI configuration
 ```
 $ uservice aicommits config --set OPENAI_URL=https://<url> OPENAI_KEY=<key>
+```
+
+#### Set OpenAI Response Language
+```
+$ uservice aicommits config --set LOCALE=en-US|zh-TW
 ```
 
 ## License
