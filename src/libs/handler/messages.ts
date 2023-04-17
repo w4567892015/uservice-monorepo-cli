@@ -10,6 +10,9 @@ export const MESSAGES = {
 export const AI_MESSAGES = {
   GIT_DIFF: `${EMOJIS.MAG} Detecting staged files...`,
   GIT_COMMIT: `${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} Successfully committed!`,
+  GIT_KIND_MESSAGES: () => {
+    console.info(`${chalk.red(EMOJIS.TWO_HEARTS)} If you want to edit the commit message. you can use the \`git commit --amend\` command.`);
+  },
   GIT_COMMIT_SKIPPED: `${EMOJIS.HEAVY_CHECK_MARK} Cancelled commit`,
   AI_ANALYZING_START: `${EMOJIS.ROBOT_FACE} The AI is analyzing your changes...`,
   AI_ANALYZING_MESSAGES: (message: string, usage: any): void => {

@@ -75,6 +75,7 @@ export class AICommitAction extends AbstractAction {
       if (answers.commit) {
         await gitCommit(commit_message);
         console.info(AI_MESSAGES.GIT_COMMIT);
+        AI_MESSAGES.GIT_KIND_MESSAGES();
       } else {
         console.info(AI_MESSAGES.GIT_COMMIT_SKIPPED);
       }
