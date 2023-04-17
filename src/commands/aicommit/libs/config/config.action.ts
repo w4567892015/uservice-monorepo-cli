@@ -61,7 +61,13 @@ export const getConfig = async (): Promise<Config> => {
 };
 
 export const setConfig = async (keyValues: [key: string, value: string][]) => {
-  const config = await readConfigFile().catch(ERROR_MESSAGE.ERROR_HANDLER);
+  let config = {} as any;
+
+  try {
+    config = await readConfigFile();
+  } catch (error) {
+    fs.writeFileSync(configPath, '', 'utf8');
+  }
 
   for (const [key, value] of keyValues) {
     const parsed = configParsers[key as string](value, ERROR_MESSAGE.ERROR_HANDLER);
