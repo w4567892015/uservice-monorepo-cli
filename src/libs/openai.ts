@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ERROR_MESSAGE } from './handler';
+import { ERROR_MESSAGE } from './handler/error';
 
 interface OpenAI {
   id: string;

@@ -48,7 +48,7 @@ export class AICommitAction extends AbstractAction {
 
     AI_MESSAGES.AI_ANALYZING_MESSAGES('Total Token Usage:', total_usage);
     console.info(AI_MESSAGES.AI_ANALYZING_END);
-    AI_MESSAGES.AI_ANALYZING_COST(total_usage.total_tokens);
+    await AI_MESSAGES.AI_ANALYZING_COST(total_usage.total_tokens);
 
     const commit_message: string = merge('ai_git_commit_summary', {
       prefix,
