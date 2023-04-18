@@ -38,7 +38,7 @@ export class AICommitAction extends AbstractAction {
     console.info(AI_MESSAGES.AI_ANALYZING_START);
     const { message, usage } = await createChatCompletion(url, key, content);
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a git diff', usage);
-    const { message: title, usage: t_usage } = await createChatCompletion(url, key, merge('ai_git_commit_title', { message, locale }));
+    const { message: title, usage: t_usage } = await createChatCompletion(url, key, merge('ai_git_commit_subject', { message, locale }));
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a title for pull request', t_usage);
     const { message: scope, usage: s_usage } = await createChatCompletion(url, key, merge('ai_git_commit_scope', { message: staged, locale }));
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a scope for pull request', s_usage);
@@ -62,10 +62,26 @@ export class AICommitAction extends AbstractAction {
       message,
     });
 
+    const opts = await load(CONFIG);
+
     const isPreview = itemsFinder('preview', options).value as boolean;
     console.info(`================ ${isPreview ? 'Preview' : 'Commit'} Summary ====================\n`);
     console.info(commit_message);
     console.info('====================================================');
+
+    const report = await lint(
+      commit_message,
+      opts.rules,
+      opts.parserPreset ? { parserOpts: opts.parserPreset.parserOpts } : {},
+    );
+
+    if (!report.valid) {
+      report.errors.forEach((e) => {
+        ERROR_MESSAGE.ERROR_HANDLER(`[${e.name}] ${e.message}`, false);
+      });
+    } else {
+      AI_MESSAGES.AI_ANALYZING_APPROVE('Conventional Commit.');
+    }
 
     if (!isPreview) {
       const prompt: inquirer.PromptModule = inquirer.createPromptModule();
@@ -76,7 +92,6 @@ export class AICommitAction extends AbstractAction {
         message: 'Editor commit message.',
         default: commit_message,
         async validate(text) {
-          const opts = await load(CONFIG);
           const report = await lint(
             text,
             opts.rules,
