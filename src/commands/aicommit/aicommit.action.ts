@@ -1,6 +1,9 @@
 import * as inquirer from 'inquirer';
 import { Answers } from 'inquirer';
 
+import load from '@commitlint/load';
+import lint from '@commitlint/lint';
+
 import { Input } from '../interfaces';
 import { AbstractAction } from '../abstract/abstract.action';
 
@@ -13,6 +16,8 @@ import {
 } from './libs/git';
 
 import { merge } from './libs/template/template.action';
+
+const CONFIG = { extends: ['@commitlint/config-conventional'] };
 
 const itemsFinder = (name: string, items: Input[]) => items.find((item) => item.name === name);
 
@@ -70,6 +75,18 @@ export class AICommitAction extends AbstractAction {
         name: 'editor',
         message: 'Editor commit message.',
         default: commit_message,
+        async validate(text) {
+          const opts = await load(CONFIG);
+          const report = await lint(
+            text,
+            opts.rules,
+            opts.parserPreset ? { parserOpts: opts.parserPreset.parserOpts } : {},
+          );
+          if (!report.valid) {
+            return report.errors.map((e) => (`[${e.name}] ${e.message}`)).join('\n');
+          }
+          return report.valid;
+        },
         waitUserInput: false,
       }]);
 
