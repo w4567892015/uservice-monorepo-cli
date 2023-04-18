@@ -69,6 +69,6 @@ export const getAzurePrices = async ({
     );
     return data;
   } catch (error: any) {
-    console.error(ERROR_MESSAGE.ERROR_HANDLER(error.message));
+    ERROR_MESSAGE.ERROR_HANDLER(error.message);
   }
 };

@@ -19,8 +19,8 @@ export abstract class AbstractRunner {
       stdio: collect ? 'pipe' : 'inherit',
       shell: true,
     };
-    // console.log(command, args, options);
     return new Promise((resolve, reject) => {
+      let errorMsg: string = '';
       const child = spawn(
         this.binary ? `${this.binary}` : command,
         [...this.args, ...args],
@@ -29,16 +29,15 @@ export abstract class AbstractRunner {
       if (collect) {
         child.stdout!.on('data', (data) => resolve(data.toString().replace(/\r\n|\n/, '')));
       }
+      child.stderr.on('data', (data) => {
+        errorMsg += data.toString();
+      });
       child.on('close', (code) => {
         if (code === 0) {
           resolve(null);
         } else {
-          console.error(
-            chalk.red(
-              MESSAGES.RUNNER_EXECUTION_ERROR(`${this.binary} ${command}`),
-            ),
-          );
-          reject();
+          console.error(chalk.red(MESSAGES.RUNNER_EXECUTION_ERROR(`${this.binary} ${command}`)));
+          reject(errorMsg);
         }
       });
     });

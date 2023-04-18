@@ -28,13 +28,13 @@ export const getGitStagedDiff = async (excludeFiles?: string[]): Promise<string>
   const runner = new GitRunner();
 
   const files = await runner.run<string>(`diff --cached --name-only --diff-algorithm=minimal -- . ${excludeFilesString}`, true, join(process.cwd())).catch(() => {
-    console.error(ERROR_MESSAGE.ERROR_HANDLER('Git repository has not been initialized'));
+    ERROR_MESSAGE.ERROR_HANDLER('Git repository has not been initialized', false);
     process.exit(1);
   });
   if (!files) return;
 
   const diff = await runner.run<string>(`diff --cached --diff-algorithm=minimal -- . ${excludeFilesString}`, true, join(process.cwd())).catch(() => {
-    console.error(ERROR_MESSAGE.ERROR_HANDLER('Git repository has not been initialized'));
+    ERROR_MESSAGE.ERROR_HANDLER('Git repository has not been initialized', false);
     process.exit(1);
   });
 
@@ -43,8 +43,9 @@ export const getGitStagedDiff = async (excludeFiles?: string[]): Promise<string>
 
 export const gitCommit = async (message: string): Promise<void> => {
   const runner = new GitRunner();
-  await runner.run<string>(`commit -m '${message}'`, true, join(process.cwd())).catch(() => {
-    console.error(ERROR_MESSAGE.ERROR_HANDLER('Git commit error'));
+  await runner.run<string>(`commit -m '${message}'`, true, join(process.cwd())).catch((error) => {
+    ERROR_MESSAGE.ERROR_HANDLER('Git commit error', false);
+    console.error(error);
     process.exit(1);
   });
 };

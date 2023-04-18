@@ -65,15 +65,27 @@ export class AICommitAction extends AbstractAction {
     if (!isPreview) {
       const prompt: inquirer.PromptModule = inquirer.createPromptModule();
 
+      const tmp_message: Answers = await prompt([{
+        type: 'editor',
+        name: 'editor',
+        message: 'Editor commit message.',
+        default: commit_message,
+        waitUserInput: false,
+      }]);
+
+      console.info('================ Change Summary ====================\n');
+      console.info(tmp_message.editor);
+      console.info('====================================================');
+
       const answers: Answers = await prompt([{
         type: 'confirm',
         name: 'commit',
-        message: 'Use this commit message?',
+        message: 'Use Change commit message?',
         default: true,
       }]);
 
       if (answers.commit) {
-        await gitCommit(commit_message);
+        await gitCommit(tmp_message.editor);
         console.info(AI_MESSAGES.GIT_COMMIT);
         AI_MESSAGES.GIT_KIND_MESSAGES();
       } else {

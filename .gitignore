@@ -50,7 +50,4 @@ docs
 documentation
 !apps/manual/docs
 
-# husky
-.husky
-
 .aicommits

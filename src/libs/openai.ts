@@ -70,6 +70,6 @@ export const createChatCompletion = async (
       usage: data.usage,
     };
   } catch (error: any) {
-    console.error(ERROR_MESSAGE.ERROR_HANDLER(error.message));
+    ERROR_MESSAGE.ERROR_HANDLER(error.message);
   }
 };
