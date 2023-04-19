@@ -16,6 +16,7 @@ import {
 
 import { merge } from './libs/template/template.action';
 
+const LOAD_OPTIONS = { cwd: __dirname };
 const CONFIG = { extends: ['@commitlint/config-conventional'] };
 
 const itemsFinder = (name: string, items: Input[]) => items.find((item) => item.name === name);
@@ -65,7 +66,7 @@ export class AICommitAction extends AbstractAction {
       message,
     });
 
-    const opts = await load(CONFIG);
+    const opts = await load(CONFIG, LOAD_OPTIONS);
 
     const isPreview = itemsFinder('preview', options).value as boolean;
     console.info(`================ ${isPreview ? 'Preview' : 'Commit'} Summary ====================\n`);
