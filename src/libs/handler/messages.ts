@@ -32,7 +32,7 @@ export const AI_MESSAGES = {
     const unitOfMeasure = unitStringToNumber(items[0].unitOfMeasure);
     console.info(chalk.red(`${EMOJIS.MONEY_WITH_WINGS} Cost: NT$${(total_tokens / unitOfMeasure) * retailPrice}`));
   },
-  AI_ANALYZING_APPROVE: (message: string) => {
-    console.info(`${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} ${message}`);
+  CODE_CONVENTIONAL: (message: string, approve: boolean) => {
+    console.info(`${approve ? chalk.green(EMOJIS.HEAVY_CHECK_MARK) : chalk.red(EMOJIS.HEAVY_MULTIPLICATION_X)} ${message}`);
   },
 };

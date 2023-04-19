@@ -1,5 +1,4 @@
-import * as inquirer from 'inquirer';
-import { Answers } from 'inquirer';
+import inquirer, { Answers, PromptModule } from 'inquirer';
 
 import load from '@commitlint/load';
 import lint from '@commitlint/lint';
@@ -36,12 +35,16 @@ export class AICommitAction extends AbstractAction {
     const url = itemsFinder('url', options).value as string;
     const key = itemsFinder('key', options).value as string;
     console.info(AI_MESSAGES.AI_ANALYZING_START);
+
     const { message, usage } = await createChatCompletion(url, key, content);
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a git diff', usage);
+
     const { message: title, usage: t_usage } = await createChatCompletion(url, key, merge('ai_git_commit_subject', { message, locale }));
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a title for pull request', t_usage);
+
     const { message: scope, usage: s_usage } = await createChatCompletion(url, key, merge('ai_git_commit_scope', { message: staged, locale }));
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a scope for pull request', s_usage);
+
     const { message: prefix, usage: p_usage } = await createChatCompletion(url, key, merge('ai_git_commit_prefix', { message, locale }));
     AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to get conventional commit prefix', p_usage);
 
@@ -75,20 +78,20 @@ export class AICommitAction extends AbstractAction {
       opts.parserPreset ? { parserOpts: opts.parserPreset.parserOpts } : {},
     );
 
+    AI_MESSAGES.CODE_CONVENTIONAL('Conventional Commit.', report.valid);
+
     if (!report.valid) {
       report.errors.forEach((e) => {
         ERROR_MESSAGE.ERROR_HANDLER(`[${e.name}] ${e.message}`, false);
       });
-    } else {
-      AI_MESSAGES.AI_ANALYZING_APPROVE('Conventional Commit.');
     }
 
     if (!isPreview) {
-      const prompt: inquirer.PromptModule = inquirer.createPromptModule();
+      const prompt: PromptModule = inquirer.createPromptModule();
 
-      const tmp_message: Answers = await prompt([{
+      const editor: Answers = await prompt([{
         type: 'editor',
-        name: 'editor',
+        name: 'message',
         message: 'Editor commit message.',
         default: commit_message,
         async validate(text) {
@@ -105,24 +108,9 @@ export class AICommitAction extends AbstractAction {
         waitUserInput: false,
       }]);
 
-      console.info('================ Change Summary ====================\n');
-      console.info(tmp_message.editor);
-      console.info('====================================================');
-
-      const answers: Answers = await prompt([{
-        type: 'confirm',
-        name: 'commit',
-        message: 'Use Change commit message?',
-        default: true,
-      }]);
-
-      if (answers.commit) {
-        await gitCommit(tmp_message.editor);
-        console.info(AI_MESSAGES.GIT_COMMIT);
-        AI_MESSAGES.GIT_KIND_MESSAGES();
-      } else {
-        console.info(AI_MESSAGES.GIT_COMMIT_SKIPPED);
-      }
+      await gitCommit(editor.message);
+      console.info(AI_MESSAGES.GIT_COMMIT);
+      AI_MESSAGES.GIT_KIND_MESSAGES();
     }
     process.exit(0);
   }
