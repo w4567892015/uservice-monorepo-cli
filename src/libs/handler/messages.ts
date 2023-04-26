@@ -11,6 +11,9 @@ export const MESSAGES = {
 
 export const AI_MESSAGES = {
   GIT_DIFF: `${EMOJIS.MAG} Detecting staged files...`,
+  GIT_COMMIT_WRITE_FILE: (filePath: string) => {
+    console.info(`${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} Write the commit message to ${filePath} file`);
+  },
   GIT_COMMIT: `${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} Successfully committed!`,
   GIT_KIND_MESSAGES: () => {
     console.info(`${chalk.red(EMOJIS.TWO_HEARTS)} If you want to edit the commit message. you can use the \`git commit --amend\` command.`);

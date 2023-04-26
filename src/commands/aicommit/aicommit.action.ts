@@ -98,9 +98,11 @@ export class AICommitAction extends AbstractAction {
       }
       const outputFile = path.join(gitRootPath, 'COMMIT_EDITMSG');
       fs.writeFileSync(outputFile, commit_message, 'utf8');
+      AI_MESSAGES.GIT_COMMIT_WRITE_FILE(outputFile);
     } else if (typeof file === 'string' && file) {
       const outputFile = path.join(process.cwd(), file);
       fs.writeFileSync(outputFile, commit_message, 'utf8');
+      AI_MESSAGES.GIT_COMMIT_WRITE_FILE(outputFile);
     }
 
     if (!isPreview) {
