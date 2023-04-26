@@ -1,4 +1,4 @@
-import { Command, OptionValues, InvalidArgumentError } from 'commander';
+import { Command, OptionValues } from 'commander';
 import { Input } from '../interfaces';
 import { AbstractCommand } from '../abstract/abstract.command';
 
@@ -11,6 +11,7 @@ export class AICommitCommand extends AbstractCommand {
       .command('aicommits')
       .alias('aics')
       .description('Generate git commits.')
+      .option('-f, --file [path]', 'Commit message to file.')
       .option('-p, --preview', 'Preview ai commit.', false)
       .addCommand(configCommand(program))
       .action(async (opt: OptionValues) => {
@@ -20,6 +21,7 @@ export class AICommitCommand extends AbstractCommand {
         options.push({ name: 'url', value: config.OPENAI_URL });
         options.push({ name: 'key', value: config.OPENAI_KEY });
         options.push({ name: 'locale', value: config.LOCALE });
+        options.push({ name: 'file', value: opt.file });
         options.push({ name: 'preview', value: opt.preview });
 
         await this.action.handle(options);

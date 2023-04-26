@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import inquirer, { Answers, PromptModule } from 'inquirer';
 
 import load from '@commitlint/load';
@@ -85,6 +87,20 @@ export class AICommitAction extends AbstractAction {
       report.errors.forEach((e) => {
         ERROR_MESSAGE.ERROR_HANDLER(`[${e.name}] ${e.message}`, false);
       });
+    }
+
+    const file = itemsFinder('file', options).value as string;
+    if (typeof file === 'boolean' && file) {
+      const gitRootPath = path.join(process.cwd(), '.git');
+      const hasGit = fs.existsSync(gitRootPath);
+      if (!hasGit) {
+        ERROR_MESSAGE.ERROR_HANDLER('No.git directory found. Please run `git init` first.');
+      }
+      const outputFile = path.join(gitRootPath, 'COMMIT_EDITMSG');
+      fs.writeFileSync(outputFile, commit_message, 'utf8');
+    } else if (typeof file === 'string' && file) {
+      const outputFile = path.join(process.cwd(), file);
+      fs.writeFileSync(outputFile, commit_message, 'utf8');
     }
 
     if (!isPreview) {
