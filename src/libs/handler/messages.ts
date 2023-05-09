@@ -39,3 +39,17 @@ export const AI_MESSAGES = {
     console.info(`${approve ? chalk.green(EMOJIS.HEAVY_CHECK_MARK) : chalk.red(EMOJIS.HEAVY_MULTIPLICATION_X)} ${message}`);
   },
 };
+
+export const AZURE_PIPELINE_MESSAGES = {
+  PRINT_TRIGGER: ({ count, branch, trigger }) => {
+    console.info('%s Found libs:', chalk.green(EMOJIS.HEAVY_CHECK_MARK), count);
+
+    console.info(`\n${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} For Branch Policies PR Filter:`);
+    console.info(`${branch.join(';')}`);
+
+    console.info(`\n${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} For Pipelines Trigger:`);
+    trigger.forEach((item: string) => {
+      console.info(`- '${item}'`);
+    });
+  },
+};
