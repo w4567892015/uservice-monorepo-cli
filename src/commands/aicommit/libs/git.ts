@@ -16,10 +16,17 @@ const filesToExclude = [
 ].map(excludeFromDiff);
 
 export const assertGitRepo = async () => {
-  const isExist = fs.existsSync(join(process.cwd(), '.git'));
-  if (!isExist) {
+  const runner = new GitRunner();
+  try {
+    await runner.run<string>('rev-parse --show-toplevel', true, join(process.cwd()));
+  } catch (error) {
     throw new Error('The current directory must be a Git repository!');
   }
+
+  // const isExist = fs.existsSync(join(process.cwd(), '.git'));
+  // if (!isExist) {
+  //   throw new Error('The current directory must be a Git repository!');
+  // }
 };
 
 export const getGitStagedDiff = async (excludeFiles?: string[]): Promise<string> => {
