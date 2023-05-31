@@ -8,7 +8,7 @@ export class AICommand extends AbstractCommand {
   public load(program: Command) {
     program
       .command('ai')
-      .description('Generate git commits.')
+      .description('Call OpenAI.')
       .addCommand(commitCommand(program))
       .addCommand(testerCommand(program));
   }

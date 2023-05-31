@@ -16,33 +16,49 @@ npm install -g @viewsonic-mvb/uservice-monorepo-cli
 $ uservice --help
 ```
 
-## OpenAI Commit
+## Configuration
 
-#### Use OpenAI commits
+#### Get configuration
 ```
-$ uservice aicommits
-```
-
-If you want to edit the commit message. you can use the `git commit --amend` command.
-
-#### Use OpenAI commit preview
-```
-$ uservice aicommits --preview
+$ uservice config --get
 ```
 
-#### Get OpenAI configuration
+#### Set configuration
 ```
-$ uservice aicommits config --get
-```
-
-#### Set OpenAI configuration
-```
-$ uservice aicommits config --set OPENAI_URL=https://<url> OPENAI_KEY=<key>
+$ uservice config --set OPENAI_URL=https://<url> OPENAI_KEY=<key>
 ```
 
 #### Set OpenAI Response Language
 ```
-$ uservice aicommits config --set LOCALE=en-US|zh-TW
+$ uservice config --set LOCALE=en-US|zh-TW
+```
+
+## OpenAI Commit
+
+#### Use OpenAI commits
+```
+$ uservice commits
+```
+
+If you want to edit the commit message. you can use the `git commit --amend` command.
+
+#### Use OpenAI commit Preview
+```
+$ uservice commits --preview
+```
+
+## OpenAI Generate Unit Test File
+
+#### Use OpenAI Unit Test
+```
+$ uservice tester -f <file path>
+```
+
+If you want to edit the commit message. you can use the `git commit --amend` command.
+
+#### Use OpenAI Unit Test Preview
+```
+$ uservice tester --preview -f <file path>
 ```
 
 ## License

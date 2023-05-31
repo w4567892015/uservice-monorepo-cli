@@ -42,25 +42,23 @@ export const testerAction = async (options: Input[]): Promise<void> => {
 
   const isPreview = itemsFinder('preview', options).value as boolean;
   let outputPath = itemsFinder('output', options).value as string;
+
   if (isPreview) {
     console.info('================ Preview Summary ====================\n');
     console.info(unit_test_summary);
     console.info('====================================================');
-  } else if (!outputPath) {
-    outputPath = targetFilePath.replace(tmp.ext, `.spec${tmp.ext}`);
+  } else {
+    if (!outputPath) outputPath = targetFilePath.replace(tmp.ext, `.spec${tmp.ext}`);
+
+    const prompt: PromptModule = inquirer.createPromptModule();
+    const confirm: Answers = await prompt([{
+      type: 'confirm',
+      name: 'isSave',
+      message: `Save unit test summary to ${outputPath.replace(process.cwd(), '.')}`,
+      default: true,
+    }]);
+
+    if (confirm.isSave) fs.writeFileSync(outputPath, unit_test_summary, { encoding: 'utf8' });
   }
-
-  const prompt: PromptModule = inquirer.createPromptModule();
-  const confirm: Answers = await prompt([{
-    type: 'confirm',
-    name: 'isSave',
-    message: `Save unit test summary to ${outputPath.replace(process.cwd(), '.')}`,
-    default: true,
-  }]);
-
-  if (confirm.isSave) {
-    fs.writeFileSync(outputPath, unit_test_summary, { encoding: 'utf8' });
-  }
-
   process.exit(0);
 };
