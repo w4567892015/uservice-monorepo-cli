@@ -2,13 +2,13 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 import { ERROR_PREFIX } from '../libs/handler';
 import { NewCommand, NewAction } from './new';
-import { AICommitCommand, AICommitAction } from './aicommit';
+import { AICommand } from './ai/ai.command';
 import { PipelineCommand, PipelineAction } from './azure-pipeline';
 
 export class CommandLoader {
   public static async load(program: Command): Promise<void> {
     new NewCommand(new NewAction()).load(program);
-    new AICommitCommand(new AICommitAction()).load(program);
+    new AICommand().load(program);
     new PipelineCommand(new PipelineAction()).load(program);
 
     this.handleInvalidCommand(program);

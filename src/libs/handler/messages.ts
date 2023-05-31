@@ -19,7 +19,7 @@ export const AI_MESSAGES = {
     console.info(`${chalk.red(EMOJIS.TWO_HEARTS)} If you want to edit the commit message. you can use the \`git commit --amend\` command.`);
   },
   GIT_COMMIT_SKIPPED: `${EMOJIS.HEAVY_CHECK_MARK} Cancelled commit`,
-  AI_ANALYZING_START: `${EMOJIS.ROBOT_FACE} The AI is analyzing your changes...`,
+  AI_ANALYZING_START: `${EMOJIS.ROBOT_FACE} The AI is analyzing your data...`,
   AI_ANALYZING_MESSAGES: (message: string, usage: any): void => {
     console.info(chalk.blue(`${EMOJIS.ZAP} ${message}`));
     console.info(chalk.magenta(`${EMOJIS.ZAP} PromptTokens: ${usage.prompt_tokens}, CompletionTokens: ${usage.completion_tokens}, TotalTokens: ${usage.total_tokens}`));

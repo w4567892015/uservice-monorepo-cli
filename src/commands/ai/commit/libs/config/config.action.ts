@@ -3,7 +3,7 @@ import path from 'path';
 import os from 'os';
 import ini from 'ini';
 
-import { ERROR_MESSAGE } from '../../../../libs/handler';
+import { ERROR_MESSAGE } from '../../../../../libs/handler';
 
 const configName = '.aicommits';
 

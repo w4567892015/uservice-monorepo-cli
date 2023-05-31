@@ -1,9 +1,9 @@
-import fs from 'fs';
+// import fs from 'fs';
 import { join } from 'path';
-import { GitRunner } from '../../../libs/runners';
-import { merge } from './template/template.action';
+import { GitRunner } from '../../../../libs/runners';
+import { merge } from '../../template/template.action';
 
-import { ERROR_MESSAGE } from '../../../libs/handler';
+import { ERROR_MESSAGE } from '../../../../libs/handler';
 
 const excludeFromDiff = (path: string) => `':!${path}'`;
 
