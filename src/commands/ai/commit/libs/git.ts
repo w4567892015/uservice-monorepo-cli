@@ -1,11 +1,12 @@
-// import fs from 'fs';
+// import fs from 'fs';]
+import os from 'os';
 import { join } from 'path';
 import { GitRunner } from '../../../../libs/runners';
 import { merge } from '../../template/template.action';
 
 import { ERROR_MESSAGE } from '../../../../libs/handler';
 
-const excludeFromDiff = (path: string) => `':!${path}'`;
+const excludeFromDiff = (path: string) => (os.platform() === 'win32' ? `":!${path}"` : `':!${path}'`);
 
 const filesToExclude = [
   'package-lock.json',
