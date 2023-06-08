@@ -81,8 +81,13 @@ const run = (appName: string) => {
     branch: [
       `/apps/${appName}/*`,
       ...tmp,
+      '!/**/*.md',
+      '!/**/.pipeline/*',
     ],
-    trigger: tmp,
+    trigger: [
+      `/apps/${appName}/*`,
+      ...tmp,
+    ],
   };
   return result;
 };
