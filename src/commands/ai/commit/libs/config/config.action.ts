@@ -15,6 +15,7 @@ const configPath = fs.existsSync(defaultConfigPath)
 interface Config {
   OPENAI_URL: string;
   OPENAI_KEY: string;
+  OPENAI_MODEL: string;
   LOCALE: string;
 }
 
@@ -30,6 +31,9 @@ const configParsers = {
       error('Please set your OpenAI API key via `aicommits config -s OPENAI_KEY=<azure openai key>`');
     }
     return key;
+  },
+  OPENAI_MODEL(model: string) {
+    return model;
   },
   LOCALE(locale?: string, error?: Function) {
     // Must be a valid locale (letters and dashes/underscores). You can consult the list of codes in: https://wikipedia.org/wiki/List_of_ISO_639-1_codes

@@ -35,18 +35,26 @@ export const commitAction = async (options: Input[]): Promise<void> => {
 
   const url = itemsFinder('url', options).value as string;
   const key = itemsFinder('key', options).value as string;
+  const model = itemsFinder('model', options).value as string | undefined;
   console.info(AI_MESSAGES.AI_ANALYZING_START);
 
-  const { message, usage } = await createChatCompletion(url, key, content);
+  const aiOptions = {
+    url, key, content, model,
+  };
+
+  const { message, usage } = await createChatCompletion(aiOptions);
   AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a git diff', usage);
 
-  const { message: title, usage: t_usage } = await createChatCompletion(url, key, merge('ai_git_commit_subject', { message, locale }));
+  aiOptions.content = merge('ai_git_commit_subject', { message, locale });
+  const { message: title, usage: t_usage } = await createChatCompletion(aiOptions);
   AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a title for pull request', t_usage);
 
-  const { message: scope, usage: s_usage } = await createChatCompletion(url, key, merge('ai_git_commit_scope', { message: staged, locale }));
+  aiOptions.content = merge('ai_git_commit_scope', { message: staged, locale });
+  const { message: scope, usage: s_usage } = await createChatCompletion(aiOptions);
   AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to summarize a scope for pull request', s_usage);
 
-  const { message: prefix, usage: p_usage } = await createChatCompletion(url, key, merge('ai_git_commit_prefix', { message, locale }));
+  aiOptions.content = merge('ai_git_commit_prefix', { message, locale });
+  const { message: prefix, usage: p_usage } = await createChatCompletion(aiOptions);
   AI_MESSAGES.AI_ANALYZING_MESSAGES('We are trying to get conventional commit prefix', p_usage);
 
   const total_usage = [usage, t_usage, p_usage].reduce((t, c) => ({

@@ -20,6 +20,7 @@ export const commitCommand = (program: Command): Command => {
       const options: Input[] = [];
       options.push({ name: 'url', value: config.OPENAI_URL });
       options.push({ name: 'key', value: config.OPENAI_KEY });
+      options.push({ name: 'model', value: config.OPENAI_MODEL });
       options.push({ name: 'locale', value: config.LOCALE });
       options.push({ name: 'file', value: opt.file });
       options.push({ name: 'preview', value: opt.preview });

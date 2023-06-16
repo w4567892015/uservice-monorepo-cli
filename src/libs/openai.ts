@@ -44,14 +44,23 @@ interface OpenAIResponse {
   usage: Usage;
 }
 
-export const createChatCompletion = async (
+type ChatCompletionInput = {
   url: string,
   key: string,
   content: string,
   completions?: number,
-  model = 'gpt-35',
+  model?: string,
+  apiVersion?: string,
+};
+
+export const createChatCompletion = async ({
+  url,
+  key,
+  content,
+  completions = 1,
+  model = 'gpt-35-turbo',
   apiVersion = '2023-03-15-preview',
-): Promise<OpenAIResponse> => {
+}: ChatCompletionInput): Promise<OpenAIResponse> => {
   try {
     const { data } = await axios.post<OpenAIChat>(
       `${url}/openai/deployments/${model}/chat/completions`,
@@ -85,6 +94,7 @@ export const createChatCompletion = async (
       usage: data.usage,
     };
   } catch (error: any) {
+    console.log(error);
     ERROR_MESSAGE.ERROR_HANDLER(error.message);
   }
 };
