@@ -40,10 +40,10 @@ function findLib(dir: string) {
     const content = fs.readFileSync(files[i])
       .toString()
       .split('\n')
-      .filter((line) => /'@libs\/.+;$/g.test(line));
+      .filter((line) => /'@(libs|sdk)\/.+;$/g.test(line));
 
     content.forEach((line) => {
-      const idx = line.indexOf('@libs');
+      const idx = line.search(/@(libs|sdk)/ig);
       const libPath = line.substring(idx, line.length - 2);
       const splitLibPath = libPath.split('/');
       let libName = splitLibPath[1];
