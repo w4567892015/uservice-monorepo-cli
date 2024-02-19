@@ -41,6 +41,7 @@ interface AzurePricesResponse {
 }
 
 interface AzurePricesRequestOptions {
+  meterId?: string;
   skuName?: string;
   location?: string;
   currencyCode?: string;
@@ -54,7 +55,8 @@ export const unitStringToNumber = (str: string): number => {
 };
 
 export const getAzurePrices = async ({
-  skuName = 'GPT-3.5-turbo',
+  meterId = 'e432b4c4-a871-5d8a-a8e3-5c76b48bfc4e',
+  skuName = 'Az-GPT-3.5-turbo',
   location = 'US East',
   currencyCode = 'USD',
 }: AzurePricesRequestOptions): Promise<AzurePricesResponse> => {
@@ -62,7 +64,7 @@ export const getAzurePrices = async ({
     const { data } = await azurePriceInstance<AzurePricesResponse>(
       {
         params: {
-          $filter: `Location eq '${location}' and skuName eq '${skuName}'`,
+          $filter: `Location eq '${location}' and meterId eq '${meterId}'`,
           currencyCode,
         },
       },
