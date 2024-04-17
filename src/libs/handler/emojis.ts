@@ -24,4 +24,8 @@ export const EMOJIS = {
   HEAVY_MULTIPLICATION_X: get('heavy_multiplication_x'),
   ROBOT_FACE: get('robot_face'),
   MONEY_WITH_WINGS: get('money_with_wings'),
+  TIMER: get('⏳'),
+  DOOR: get('🚪'),
+  USER: get('👤'),
+  KEY: get('🔑'),
 };

@@ -4,12 +4,14 @@ import { ERROR_PREFIX } from '../libs/handler';
 import { NewCommand, NewAction } from './new';
 import { AICommand } from './ai/ai.command';
 import { PipelineCommand, PipelineAction } from './azure-pipeline';
+import { VaultCommand } from './vault/vault.command';
 
 export class CommandLoader {
   public static async load(program: Command): Promise<void> {
     new NewCommand(new NewAction()).load(program);
     new AICommand().load(program);
     new PipelineCommand(new PipelineAction()).load(program);
+    new VaultCommand().load(program);
 
     this.handleInvalidCommand(program);
   }

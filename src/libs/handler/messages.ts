@@ -53,3 +53,24 @@ export const AZURE_PIPELINE_MESSAGES = {
     });
   },
 };
+
+export const VAULT_MESSAGES = {
+  LOGIN_SUCCESS: (expire_time: string) => {
+    console.info(`${chalk.green(EMOJIS.HEAVY_CHECK_MARK)} Successfully logged !!`);
+    console.warn(`${chalk.yellow(EMOJIS.TIMER)} Expires in ${expire_time} !!`);
+  },
+  DATABASE_RESPONSE: ({ user, pd, expire_time }) => {
+    console.info('================ DataBase Login Information ====================\n');
+    console.warn(`${EMOJIS.USER} User: '${user}'\n`);
+    console.warn(`${EMOJIS.KEY} Password: '${pd}'\n`);
+    console.warn(`${chalk.yellow(EMOJIS.TIMER)} Expires in ${expire_time}\n`);
+    console.info('====================================================');
+  },
+  KEY_VALUE_RESPONSE: ({ data, metadata }) => {
+    console.info('================ KV Information ====================\n');
+    console.info('%s', metadata);
+    console.info('%s', data);
+    console.info('====================================================');
+  },
+  LOGOUT_SUCCESS: `${chalk.green(EMOJIS.DOOR)} Successfully logout !!`,
+};
