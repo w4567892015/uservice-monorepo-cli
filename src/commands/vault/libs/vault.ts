@@ -4,6 +4,9 @@ import { VaultRunner } from '../../../libs/runners';
 
 import { VaultLoginOptions } from './vault.type';
 
+import { EMOJIS } from '../../../libs/handler/emojis';
+import { ERROR_MESSAGE } from '../../../libs/handler';
+
 const runner = new VaultRunner();
 
 function commandHelp(
@@ -31,12 +34,10 @@ export const login = async ({ method, address, format }: VaultLoginOptions) => {
   } catch (err) {
     const error = err as string;
     if (error.indexOf('vault: not found') > 0) {
-      throw new Error('Please install vault first.');
+      ERROR_MESSAGE.ERROR_HANDLER(`Please install vault first.\n\n${EMOJIS.APPLE} 'sudo brew install vault'\n\n${EMOJIS.LAPTOP} 'sudo apt install vault'`);
+      process.exit(1);
     }
-    throw new Error(error);
+    ERROR_MESSAGE.ERROR_HANDLER(error);
+    process.exit(1);
   }
-};
-
-export const logout = async () => {
-
 };

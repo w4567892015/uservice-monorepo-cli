@@ -28,4 +28,6 @@ export const EMOJIS = {
   DOOR: get('🚪'),
   USER: get('👤'),
   KEY: get('🔑'),
+  APPLE: get('🍎'),
+  LAPTOP: get('💻'),
 };
