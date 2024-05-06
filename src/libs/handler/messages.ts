@@ -31,9 +31,15 @@ export const AI_MESSAGES = {
     // Currency: TWD
     // https://azure.microsoft.com/en-us/pricing/details/cognitive-services/openai-service/
     const items = getAzureItemResponse(await getAzurePrices({ currencyCode: 'TWD' }));
-    const { retailPrice } = items[0];
-    const unitOfMeasure = unitStringToNumber(items[0].unitOfMeasure);
-    console.info(chalk.red(`${EMOJIS.MONEY_WITH_WINGS} Cost: NT$${(total_tokens / unitOfMeasure) * retailPrice}`));
+    let price = 0;
+    let unit = 1;
+    if (items.length > 0) {
+      const { retailPrice } = items[0];
+      const unitOfMeasure = unitStringToNumber(items[0].unitOfMeasure);
+      price = retailPrice;
+      unit = unitOfMeasure;
+    }
+    console.info(chalk.red(`${EMOJIS.MONEY_WITH_WINGS} Cost: NT$${(total_tokens / unit) * price}`));
   },
   CODE_CONVENTIONAL: (message: string, approve: boolean) => {
     console.info(`${approve ? chalk.green(EMOJIS.HEAVY_CHECK_MARK) : chalk.red(EMOJIS.HEAVY_MULTIPLICATION_X)} ${message}`);
