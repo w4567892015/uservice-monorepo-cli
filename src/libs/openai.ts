@@ -103,8 +103,8 @@ export const createCompletion = async (
   url: string,
   key: string,
   content: string,
-  model = 'text-davinci-003',
-  apiVersion = '2022-12-01',
+  model = 'gpt-35-turbo-instruct',
+  apiVersion = '2024-08-01-preview',
 ): Promise<OpenAIResponse> => {
   try {
     const { data } = await axios.post<OpenAI>(
