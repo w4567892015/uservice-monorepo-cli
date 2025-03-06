@@ -75,18 +75,18 @@ const run = (appName: string) => {
 
   findLib(appDir);
 
-  const tmp = Object.keys(libs).map((item) => (`/libs/${item}/*`));
+  const tmp = Object.keys(libs);
   const result = {
     count: tmp.length,
     branch: [
       `/apps/${appName}/*`,
-      ...tmp,
+      ...tmp.map((item) => (`/libs/${item}/*`)),
       '!/**/*.md',
       '!/**/.pipeline/*',
     ],
     trigger: [
-      `/apps/${appName}/*`,
-      ...tmp,
+      `apps/${appName}/*`,
+      ...tmp.map((item) => (`libs/${item}/*`)),
     ],
   };
   return result;
