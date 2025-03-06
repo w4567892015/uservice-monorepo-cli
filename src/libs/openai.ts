@@ -111,7 +111,7 @@ export const createCompletion = async (
       `${url}/openai/deployments/${model}/completions`,
       {
         prompt: content,
-        max_tokens: 800,
+        max_tokens: 1000,
         temperature: 0.7,
         frequency_penalty: 0,
         presence_penalty: 0,
@@ -136,6 +136,7 @@ export const createCompletion = async (
       usage: data.usage,
     };
   } catch (error: any) {
+    console.log(error.response);
     ERROR_MESSAGE.ERROR_HANDLER(error.message);
   }
 };

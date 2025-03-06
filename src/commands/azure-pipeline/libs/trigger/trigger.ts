@@ -51,7 +51,7 @@ function findLib(dir: string) {
 
       if (libName === 'database') {
         if (splitLibPath.length > 2) {
-          libName = `${splitLibPath[1]}/src/${splitLibPath[2]}/${splitLibPath[3]}/models`;
+          libName = `${splitLibPath[1]}/src/${splitLibPath[2]}/${splitLibPath[3]}`;
         } else {
           return;
         }
