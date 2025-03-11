@@ -2,9 +2,9 @@ import { Command, OptionValues } from 'commander';
 
 import { getConfig, setConfig } from './config.action';
 
-export const configCommand = (program: Command): Command => {
-  const commander = program
-    .command('config')
+export const configCommand = (): Command => {
+  const commander = 
+    new Command('config')
     .description('Vault configuration')
     .option('-g, --get', 'Get vault configuration.')
     .option('-s, --set [key=value...]', 'Set vault configuration.')

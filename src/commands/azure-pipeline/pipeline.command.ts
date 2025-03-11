@@ -10,7 +10,7 @@ export class PipelineCommand extends AbstractCommand {
       .command('pipeline [app_name]')
       .alias('ap')
       .description('Generate azure pipeline yml.')
-      .addCommand(triggerCommand(program))
+      .addCommand(triggerCommand())
       .action(async (name) => {
         const inputs: Input[] = [];
         inputs.push({ name: 'name', value: name });

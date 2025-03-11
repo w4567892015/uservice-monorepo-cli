@@ -9,7 +9,7 @@ export class AICommand extends AbstractCommand {
     program
       .command('ai')
       .description('Call OpenAI.')
-      .addCommand(commitCommand(program))
-      .addCommand(testerCommand(program));
+      .addCommand(commitCommand())
+      .addCommand(testerCommand());
   }
 }
