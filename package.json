@@ -1,6 +1,6 @@
 {
   "name": "@viewsonic-mvb/uservice-monorepo-cli",
-  "version": "1.25.5",
+  "version": "1.25.6",
   "description": "The monorepo cli tools.",
   "bin": {
     "uservice": "dist/bin/uservice.js"
