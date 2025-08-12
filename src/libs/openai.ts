@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { ERROR_MESSAGE } from './handler/error';
 
 interface OpenAI extends OpenAIChat {
@@ -94,8 +94,8 @@ export const createChatCompletion = async ({
       usage: data.usage,
     };
   } catch (error: any) {
-    console.log(error);
-    ERROR_MESSAGE.ERROR_HANDLER(error.message);
+    const { code, message } = error.response.data.error;
+    ERROR_MESSAGE.ERROR_HANDLER(` [${code}] ${message}`);
   }
 };
 
