@@ -2,9 +2,8 @@ import { Command, OptionValues } from 'commander';
 
 import { getConfig, setConfig } from './config.action';
 
-export const configCommand = (program: Command): Command => {
-  const commander = program
-    .command('config')
+export const configCommand = (): Command => {
+  const commander = new Command('config')
     .description('OpenAI configuration')
     .option('-g, --get', 'Get openAI configuration.')
     .option('-s, --set [key=value...]', 'Set openAI configuration.')

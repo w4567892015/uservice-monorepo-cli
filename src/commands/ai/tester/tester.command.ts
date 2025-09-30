@@ -6,15 +6,14 @@ import { getConfig } from './libs/config/config.action';
 
 import { testerAction } from './tester.action';
 
-export const testerCommand = (program: Command): Command => {
-  const commander = program
-    .command('tester')
+export const testerCommand = (): Command => {
+  const commander = new Command('tester')
     .alias('tr')
     .description('Generate unit test.')
     .requiredOption('-f, --file [path]', 'Target file path.')
     .option('-o, --output [path]', 'Output file path.')
     .option('-p, --preview', 'Preview ai unit test.', false)
-    .addCommand(configCommand(program))
+    .addCommand(configCommand())
     .action(async (opt: OptionValues) => {
       const config = await getConfig();
 

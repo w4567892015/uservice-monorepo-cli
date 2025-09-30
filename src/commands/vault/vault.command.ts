@@ -9,9 +9,9 @@ export class VaultCommand extends AbstractCommand {
     program
       .command('vault')
       .description('Call Vault.')
-      .addCommand(configCommand(program))
-      .addCommand(loginCommand(program))
-      .addCommand(getVariableCommand(program))
-      .addCommand(logoutCommand(program));
+      .addCommand(configCommand())
+      .addCommand(loginCommand())
+      .addCommand(getVariableCommand())
+      .addCommand(logoutCommand());
   }
 }

@@ -6,14 +6,13 @@ import { getConfig } from './libs/config/config.action';
 
 import { commitAction } from './commit.action';
 
-export const commitCommand = (program: Command): Command => {
-  const commander = program
-    .command('commits')
+export const commitCommand = (): Command => {
+  const commander = new Command('commits')
     .alias('cs')
     .description('Generate git commits.')
     .option('-f, --file [path]', 'Commit message to file.')
     .option('-p, --preview', 'Preview ai commit.', false)
-    .addCommand(configCommand(program))
+    .addCommand(configCommand())
     .action(async (opt: OptionValues) => {
       const config = await getConfig();
 

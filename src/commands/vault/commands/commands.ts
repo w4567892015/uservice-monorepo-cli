@@ -7,9 +7,8 @@ import { getConfig, setConfig } from '../libs/config/config.action';
 
 import { loginAction, getVariableAction } from './actions';
 
-export const loginCommand = (program: Command): Command => {
-  const commander = program
-    .command('login')
+export const loginCommand = (): Command => {
+  const commander = new Command('login')
     .description('Login Vault.')
     .option('-m, --method <method>', 'Login method', 'oidc')
     .option('-f, --format <format>', 'Output format', 'json')
@@ -31,9 +30,8 @@ export const loginCommand = (program: Command): Command => {
   return commander;
 };
 
-export const getVariableCommand = (program: Command): Command => {
-  const commander = program
-    .command('get')
+export const getVariableCommand = (): Command => {
+  const commander = new Command('get')
     .description('Get variable in Vault.')
     .option('-db, --database', 'get db', false)
     .option('-kv, --key_value', 'get key_value', false)
@@ -60,9 +58,8 @@ export const getVariableCommand = (program: Command): Command => {
   return commander;
 };
 
-export const logoutCommand = (program: Command): Command => {
-  const commander = program
-    .command('logout')
+export const logoutCommand = (): Command => {
+  const commander = new Command('logout')
     .description('logout Vault.')
     .action(async () => {
       await setConfig([
